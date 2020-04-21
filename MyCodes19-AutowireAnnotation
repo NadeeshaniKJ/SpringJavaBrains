@@ -1,0 +1,118 @@
+spring.xml ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+    <bean id="circle" class="com.kanchi.Circle" >
+        <!--<property name="centre" ref="pointA"/>-->
+    </bean>
+
+    <bean id="pointA" class="com.kanchi.Point">
+        <qualifier value="circleRelated"/>
+        <property name="x" value="${pointA.pointX}"/>
+        <property name="y" value="${pointA.pointY}"/>
+    </bean>
+
+    <bean id="pointB" class="com.kanchi.Point">
+        <property name="x" value="-20"/>
+        <property name="y" value="0"/>
+    </bean>
+
+    <bean id="pointC" class="com.kanchi.Point">
+        <property name="x" value="20"/>
+        <property name="y" value="0"/>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="points.properties"/>
+    </bean>
+
+    <context:annotation-config/>
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+
+
+</beans>
+
+
+
+Circle.java /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+package com.kanchi;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
+
+public class Circle implements Shape {
+    private Point centre;
+
+    public Point getCentre() {
+        return centre;
+    }
+
+    @Autowired
+    @Qualifier("circleRelated")
+//    @Resource(name = "pointA")
+    public void setCentre(Point centre) {
+        this.centre = centre;
+    }
+
+    @Override
+    public void draw() {
+        System.out.println(" Circle Centre is (" + centre.getX() + "," + centre.getY() + ")");
+    }
+//
+//    @PostConstruct
+//    public void initialize(){
+//        System.out.println("start ");
+//    }
+//    @PreDestroy
+//    public void destroy(){
+//        System.out.println("end");
+//    }
+
+}
+
+
+Shape.java ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+package com.kanchi;
+
+public interface Shape {
+    public void draw();
+}
+
+
+Drawing.java /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+       package com.kanchi;
+
+       import org.springframework.beans.factory.BeanFactory;
+       import org.springframework.context.ApplicationContext;
+       import org.springframework.context.support.AbstractApplicationContext;
+       import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+       public class DrawingApp {
+
+           public static void main(String[] args){
+               ApplicationContext context= new ClassPathXmlApplicationContext("spring.xml");
+       //        BeanFactory beanFactory=context;
+       //        context.registerShutdownHook();
+               Shape shape= (Shape) context.getBean("circle");
+               shape.draw();
+
+           }
+       }
+

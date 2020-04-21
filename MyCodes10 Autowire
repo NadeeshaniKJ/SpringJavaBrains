@@ -1,0 +1,73 @@
+not a good practice
+
+Triangle.java ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+package com.kanchi;
+
+public class Triangle {
+
+    private Point pointA;
+    private Point pointB;
+    private Point pointC;
+
+    public Point getPointA() {
+        return pointA;
+    }
+
+    public void setPointA(Point pointA) {
+        this.pointA = pointA;
+    }
+
+    public Point getPointB() {
+        return pointB;
+    }
+
+    public void setPointB(Point pointB) {
+        this.pointB = pointB;
+    }
+
+    public Point getPointC() {
+        return pointC;
+    }
+
+    public void setPointC(Point pointC) {
+        this.pointC = pointC;
+    }
+
+    public void draw(){
+        System.out.println("Point A=("+getPointA().getX()+","+getPointA().getY()+")");
+        System.out.println("Point B=("+getPointB().getX()+","+getPointB().getY()+")");
+        System.out.println("Point C=("+getPointC().getX()+","+getPointC().getY()+")");
+
+    }
+}
+
+
+spring.xml /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+    <bean id="triangle" class="com.kanchi.Triangle" autowire="byName">
+
+    </bean>
+
+    <bean id="pointA" class="com.kanchi.Point">
+        <property name="x" value="0"/>
+        <property name="y" value="0"/>
+    </bean>
+
+        <bean id="pointB" class="com.kanchi.Point">
+            <property name="x" value="-20"/>
+            <property name="y" value="0"/>
+        </bean>
+
+        <bean id="pointC" class="com.kanchi.Point">
+            <property name="x" value="20"/>
+            <property name="y" value="0"/>
+        </bean>
+
+
+
+</beans>

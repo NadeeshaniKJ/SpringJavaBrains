@@ -1,0 +1,77 @@
+spring.xml ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+    <beans>
+    <bean id="triangle" class="com.kanchi.Triangle" name="triangle-name">
+        <property name="Points">
+            <list>
+                <ref bean="ZeroPoint"/>
+                <ref bean="pointB"/>
+                <ref bean="pointC"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ZeroPoint" class="com.kanchi.Point">
+        <property name="x" value="0"/>
+        <property name="y" value="0"/>
+    </bean>
+
+        <bean id="pointB" class="com.kanchi.Point">
+            <property name="x" value="-20"/>
+            <property name="y" value="0"/>
+        </bean>
+
+        <bean id="pointC" class="com.kanchi.Point">
+            <property name="x" value="20"/>
+            <property name="y" value="0"/>
+        </bean>
+
+
+
+</beans>
+
+
+DrawingApp.java ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+package com.kanchi;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class DrawingApp {
+
+    public static void main(String[] args){
+        ApplicationContext context= new ClassPathXmlApplicationContext("spring.xml");
+        Triangle triangle= (Triangle) context.getBean("triangle");
+        triangle.draw();
+    }
+}
+
+Triangle.java /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+package com.kanchi;
+
+import java.util.List;
+
+public class Triangle {
+
+    private List<Point> points;
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
+
+    public void draw(){
+        for(Point point:points){
+            System.out.println("Point A=("+point.getX()+","+point.getY()+")");
+        }
+
+    }
+}

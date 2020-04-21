@@ -1,0 +1,56 @@
+spring.xml ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="triangle" class="com.kanchi.Triangle">
+        <!--<constructor-arg type="java.lang.String" value="Equilateral"/>
+        <constructor-arg type="int" value="20"/>-->
+        <constructor-arg index="0" value="Equilateral"/>
+        <constructor-arg index="1" value="20"/>
+    </bean>
+</beans>
+
+
+Triangle.java /////////////////////////////////////////////////////////////////////////////////////////////////////////
+package com.kanchi;
+
+public class Triangle {
+
+    private String type;
+    private int height;
+
+    public Triangle(String type){
+        this.type=type;
+
+    }
+
+    public Triangle(String type, int height){
+        this.type=type;
+        this.height=height;
+
+    }
+
+    /*public void setType(String type) {
+        this.type = type;
+    }*/
+
+    public int getHeight() {
+        return height;
+    }
+
+   /* public void setHeight(int height) {
+        this.height = height;
+    }*/
+
+
+    public String getType() {
+        return type;
+    }
+
+
+
+    public void draw(){
+        System.out.println(getType()+" Triangle Drawn of height "+getHeight());
+    }
+}

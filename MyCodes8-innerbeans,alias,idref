@@ -1,0 +1,36 @@
+spring.xml ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+    <bean id="triangle" class="com.kanchi.Triangle" name="triangle-name">
+        <property name="pointA" ref="ZeroPoint"/>  //idref: <property name="foo"><idref bean="bar"/></property> is not at all the same as <property name="foo" ref="bar"/>. It is the same as <property name="foo" value="bar"/>, except that it will fail when there is no bean named "bar" or when the bean type does not match.
+
+
+        <property name="pointB">
+            <bean class="com.kanchi.Point">
+                <property name="x" value="-20"/>
+                <property name="y" value="0"/>
+            </bean>
+        </property>
+
+        <property name="pointC">
+            <bean class="com.kanchi.Point">
+                <property name="x" value="20"/>
+                <property name="y" value="0"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="ZeroPoint" class="com.kanchi.Point">
+        <property name="x" value="0"/>
+        <property name="y" value="0"/>
+    </bean>
+
+    <alias name="triangle" alias="triangle-alias"/>
+
+</beans>
+
+
